@@ -27,7 +27,7 @@ const Products = () => {
 
   useEffect(() => {
     try {
-      const socket = socketIOClient('http://localhost:5000/');
+      const socket = socketIOClient('http://localhost');
       socket.on('updatedEmail', () => {
         loadUser();
       });
