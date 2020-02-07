@@ -76,7 +76,7 @@ const Products = () => {
           </Typography>
           <br />
 
-          <Grid container spacing={2} justify="center">
+          <Grid container justify="center">
 
             {/* <Grid item md={4} > */}
             {products.map(product => <ProductItem product={product} key={product._id} />)}

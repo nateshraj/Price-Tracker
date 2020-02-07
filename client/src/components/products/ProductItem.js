@@ -25,9 +25,9 @@ const useStyles = makeStyles({
   },
   imgFlipkart: {
     // margin: '100%',
-    width: '50%',
-    height: '30%',
-    marginBottom: '2%'
+    width: '5vh',
+    // height: '5vh',
+    // marginBottom: '2%'
     // flexGrow: 1,
     // alignSelf: 'right'
     // display: "flex",
@@ -35,9 +35,9 @@ const useStyles = makeStyles({
   },
   imgAmazon: {
     // margin: '100%',
-    width: '60%',
-    height: '30%',
-    marginBottom: '2%'
+    width: '6vh',
+    // height: '30%',
+    // marginBottom: '2%'
     // flexGrow: 1,
     // alignSelf: 'right'
     // display: "flex",
@@ -115,30 +115,30 @@ const ProductItem = ({ product }) => {
     //   </CardActions>
     // </Card>
 
-    <Grid item md={2}>
+    <Grid item style={{ padding: 5 }} md={2}>
       <Card className={classes.card}>
-        <CardActionArea>
-          {/* <CardMedia
+        {/* <CardActionArea> */}
+        {/* <CardMedia
             className={classes.media}
             image="/static/images/cards/contemplative-reptile.jpg"
             title="Contemplative Reptile"
           /> */}
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {name}
-            </Typography>
-            <Typography variant="h6" component="p">
-              Current Price: {price} <br />
-              {/* Target Price: ₹60000 */}
-              {targetPrice && `Target Price: ₹ ${targetPrice}`}
-            </Typography>
-          </CardContent>
-        </CardActionArea>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="h2">
+            {name}
+          </Typography>
+          <Typography variant="h6" component="p">
+            Current Price: {price} <br />
+            {/* Target Price: ₹60000 */}
+            {targetPrice && `Target Price: ₹ ${targetPrice}`}
+          </Typography>
+        </CardContent>
+        {/* </CardActionArea> */}
         <CardActions>
           {/* <CardActions className={classes.test}> */}
-          <Button size="small" color="primary">
+          {/* <Button size="small" color="primary">
             Price History
-          </Button>
+          </Button> */}
           <Button size="small" color="primary" onClick={toggleDialog}>
             Edit Target
           </Button>
