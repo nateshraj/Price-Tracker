@@ -33,21 +33,18 @@ const Register = (props) => {
     errorMessage: ''
   });
 
-
   const authContext = useContext(AuthContext);
   const { register, error, isAuthenticated, loadUser } = authContext;
 
   useEffect(() => {
     loadUser();
     if (isAuthenticated) {
-      console.log(`User is ${isAuthenticated}`);
       props.history.push('/products');
     }
     if (error === 'Email already exists') {
       setValues({ ...values, passwordError: false, confirmPasswordError: false, userError: true, errorMessage: error });
     } // eslint-disable-next-line
   }, [error, isAuthenticated, props.history])
-  // }, [error])
 
   const { name, email, password, confirmPassword, userError, passwordError, confirmPasswordError, errorMessage } = values;
 
@@ -64,7 +61,6 @@ const Register = (props) => {
       setValues({ ...values, passwordError: true, confirmPasswordError: true, errorMessage: 'Passwords do not match' });
     } else {
       register({ name, email, password });
-      // console.log('Registered');
     }
   }
 
@@ -89,7 +85,6 @@ const Register = (props) => {
                 type={values.showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={handleChange}
-                // required
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton onClick={() => handleClickShowPassword('showPassword')} edge="end">
@@ -107,7 +102,6 @@ const Register = (props) => {
                   type={values.showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={handleChange}
-                  // required
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton onClick={() => handleClickShowPassword('showPassword')} edge="end">
@@ -128,7 +122,6 @@ const Register = (props) => {
                 type={values.showConfirmPassword ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={handleChange}
-                // required
                 minLength="6"
                 endAdornment={
                   <InputAdornment position="end">
@@ -147,7 +140,6 @@ const Register = (props) => {
                   type={values.showConfirmPassword ? 'text' : 'password'}
                   value={confirmPassword}
                   onChange={handleChange}
-                  // required
                   minLength="6"
                   endAdornment={
                     <InputAdornment position="end">

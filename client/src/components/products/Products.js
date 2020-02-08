@@ -1,13 +1,13 @@
 import React, { useEffect, useContext, Fragment } from 'react';
 import Navbar from '../layouts/Appbar';
 import ProductItem from './ProductItem';
-import { Typography, Grid, Fab, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button } from '@material-ui/core';
+import { Typography, Grid, Fab, Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Button, Snackbar } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { ProductContext } from '../../context/product/ProductContext';
 import socketIOClient from 'socket.io-client';
 import Warning from '../layouts/Warning';
-
+import { Alert } from '@material-ui/lab';
 
 const Products = () => {
   const buttonStyle = {
@@ -23,7 +23,7 @@ const Products = () => {
   const { user, loadUser } = authContext;
 
   const productContext = useContext(ProductContext);
-  const { products, addProduct, getProducts } = productContext;
+  const { products, addProduct, getProducts, error, clearError } = productContext;
 
   useEffect(() => {
     try {
@@ -50,9 +50,6 @@ const Products = () => {
 
   const { dialogOpen, productLink, targetPrice } = values;
 
-  // const handleClickOpen = () => setValues({ ...values, dialogOpen: true });
-  // const handleClose = () => setValues({ ...values, dialogOpen: false });
-
   const toggleDialog = () => setValues({ ...values, dialogOpen: !values.dialogOpen, productLink: '', targetPrice: '' });
 
   const handleChange = e => setValues({ ...values, [e.target.name]: e.target.value });
@@ -68,24 +65,14 @@ const Products = () => {
       <Navbar />
       <br />
       {user && !user.isVerified ? (<Warning />) :
-
         (<Fragment>
           <br />
           <Typography gutterBottom variant="h4" align="center" >
             Products
           </Typography>
           <br />
-
           <Grid container justify="center">
-
-            {/* <Grid item md={4} > */}
             {products.map(product => <ProductItem product={product} key={product._id} />)}
-            {/* </Grid> */}
-
-            {/* <Grid item md={2} >
-          <ProductItem />
-        </Grid> */}
-
           </Grid>
         </Fragment>)}
       {user && !user.isVerified ? (
@@ -97,9 +84,11 @@ const Products = () => {
             <AddIcon />
           </Fab>
         )}
-      {/* <Fab color="primary" style={buttonStyle} aria-label="add" onClick={toggleDialog} >
-        <AddIcon />
-      </Fab> */}
+      {error &&
+        (<Snackbar open={true} autoHideDuration={5000} onClose={clearError}>
+          <Alert onClose={clearError} severity="error">{error}</Alert>
+        </Snackbar>)}
+
       <Dialog open={dialogOpen} onClose={toggleDialog} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Add Product</DialogTitle>
         <DialogContent>
@@ -121,10 +110,8 @@ const Products = () => {
         </DialogActions>
       </Dialog>
 
-
-
     </div>
   )
 }
 
-export default Products
+export default Products;

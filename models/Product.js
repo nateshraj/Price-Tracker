@@ -14,11 +14,9 @@ const ProductSchema = mongoose.Schema({
     required: true
   },
   price: {
-    // Change to number later
     type: String
   },
   targetPrice: {
-    // Change to number later
     type: String
   },
   date: {

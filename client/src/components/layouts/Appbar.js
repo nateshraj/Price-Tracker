@@ -10,13 +10,11 @@ const Appbar = () => {
   const { isAuthenticated, logout } = authContext;
 
   const productContext = useContext(ProductContext);
-  const { refreshPrices } = productContext;
-
-  // Need to clear products from the product context later
+  const { refreshPrices, clearProducts } = productContext;
 
   const onLogout = () => {
     logout();
-    // clearProducts();
+    clearProducts();
   }
 
   return (

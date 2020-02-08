@@ -7,8 +7,6 @@ export const ProductContext = createContext();
 const ProductContextProvider = (props) => {
   const initialState = {
     products: [],
-    current: null,
-    filtered: null,
     error: null
   };
 
@@ -19,7 +17,7 @@ const ProductContextProvider = (props) => {
       const res = await axios.get('/api/products');
       dispatch({ type: 'GET_PRODUCTS', payload: res.data });
     } catch (e) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: e.response.msg });
+      dispatch({ type: 'PRODUCT_ERROR', payload: 'Unable to load products. Please try again later' });
     }
   }
 
@@ -31,7 +29,7 @@ const ProductContextProvider = (props) => {
       const res = await axios.post('/api/products', product, config);
       dispatch({ type: 'ADD_PRODUCT', payload: res.data });
     } catch (e) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: e.response.msg });
+      dispatch({ type: 'PRODUCT_ERROR', payload: e.response.data });
     }
   }
 
@@ -39,9 +37,8 @@ const ProductContextProvider = (props) => {
     try {
       await axios.delete(`/api/products/${id}`);
       dispatch({ type: 'DELETE_PRODUCT', payload: id });
-
     } catch (e) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: e.response.msg });
+      dispatch({ type: 'PRODUCT_ERROR', payload: 'Unable to delete product. Please try again later' });
     }
   }
 
@@ -53,7 +50,7 @@ const ProductContextProvider = (props) => {
       const res = await axios.put(`/api/products/${id}`, { targetPrice }, config);
       dispatch({ type: 'UPDATE_TARGETPRICE', payload: res.data });
     } catch (e) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: e.response.msg });
+      dispatch({ type: 'PRODUCT_ERROR', payload: 'Unable to update product. Please try again later' });
     }
   }
 
@@ -63,38 +60,23 @@ const ProductContextProvider = (props) => {
     }
     try {
       await axios.get('/api/products/refresh', config);
-      // const res = await axios.get('/api/products/refresh', config);
-      // dispatch({ type: 'REFRESH_PRICES', payload: res.data });
     } catch (e) {
-      dispatch({ type: 'PRODUCT_ERROR', payload: e.response.msg });
+      dispatch({ type: 'PRODUCT_ERROR', payload: 'Unable to refresh products. Please try again later' });
     }
   }
-
 
   const clearProducts = (id) => {
     dispatch({ type: 'CLEAR_PRODUCTS' });
   }
 
-  const setCurrent = (product) => {
-    dispatch({ type: 'SET_CURRENT', payload: product });
-  }
-
-  const clearCurrent = () => {
-    dispatch({ type: 'CLEAR_CURRENT' });
-  }
-
-  const filterProducts = (text) => {
-    dispatch({ type: 'FILTER_PRODUCTS', payload: text });
-  }
-
-  const clearFilter = () => {
-    dispatch({ type: 'CLEAR_FILTER' });
+  const clearError = () => {
+    dispatch({ type: 'CLEAR_ERROR' });
   }
 
   return (
     <ProductContext.Provider value={{
-      products: state.products, current: state.current, filtered: state.filtered, error: state.error, addProduct, deleteProduct, setCurrent, clearCurrent,
-      filterProducts, clearFilter, getProducts, clearProducts, updateTargetPrice, refreshPrices
+      products: state.products, error: state.error, addProduct, deleteProduct,
+      getProducts, clearProducts, updateTargetPrice, refreshPrices, clearError
     }}>
       {props.children}
     </ProductContext.Provider>

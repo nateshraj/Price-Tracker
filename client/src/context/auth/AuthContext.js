@@ -17,19 +17,10 @@ const AuthContextProvider = (props) => {
   const [state, dispatch] = useReducer(authReducer, initialState);
 
   const loadUser = async () => {
-    // if (localStorage.token) {
-    //   setAuthToken(localStorage.token);
-    // }
     setAuthToken(localStorage.token);
     try {
       const res = await axios.get('/api/user');
-      // console.log('$$$');
-      // console.log(res.data);
-      // console.log('$$$');
       await dispatch({ type: 'USER_LOADED', payload: res.data });
-      // console.log('--');
-      // console.log(state);
-      // console.log('--');
     } catch (e) {
       dispatch({ type: 'AUTH_ERROR' });
     }
@@ -62,9 +53,6 @@ const AuthContextProvider = (props) => {
   }
 
   const logout = () => { dispatch({ type: 'LOGOUT' }) };
-
-  // Not needed mostly
-  // const verify = () => { dispatch({ type: 'VERIFY_EMAIL' }); }
 
   return (
     <AuthContext.Provider value={{

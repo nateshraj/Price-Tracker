@@ -10,16 +10,8 @@ export default (state, action) => {
     case 'AUTH_ERROR':
     case 'LOGIN_FAIL':
     case 'LOGOUT':
-      console.log('please');
       localStorage.removeItem('token');
       return { ...state, token: null, isAuthenticated: false, loading: false, user: null, error: action.payload };
-    // Not needed mostly
-    // case 'VERIFY_EMAIL':
-    //   if (state.user) {
-    //     const user = { ...state.user };
-    //     user.isVerified = true;
-    //     return { ...state, user };
-    //   }
     default:
       return state;
   }

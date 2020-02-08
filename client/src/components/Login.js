@@ -41,7 +41,6 @@ const Login = (props) => {
   useEffect(() => {
     loadUser();
     if (isAuthenticated) {
-      console.log('going here is it');
       props.history.push('/products');
     }
     if (error === 'Email does not exist') {
@@ -62,7 +61,6 @@ const Login = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     login({ email, password });
-    // console.log('Logged in');
   }
 
   const handleReset = async (e) => {
@@ -71,12 +69,11 @@ const Login = (props) => {
       const config = {
         headers: { 'Content-Type': 'application/json' }
       }
-      // console.log(resetEmail);
       await axios.post('/api/reset-email', { resetEmail }, config);
+      toggleDialog();
     } catch (e) {
-      console.log(e.message);
+      toggleDialog();
     }
-    toggleDialog();
   }
 
   return (
@@ -99,7 +96,6 @@ const Login = (props) => {
                 type={values.showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={handleChange}
-                // required
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton onClick={() => handleClickShowPassword('showPassword')} edge="end">
@@ -160,7 +156,6 @@ const Login = (props) => {
         </Dialog>
       </Paper>
     </Grid>
-
   )
 }
 

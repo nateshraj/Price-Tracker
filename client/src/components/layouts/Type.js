@@ -3,9 +3,6 @@ import TypeIt from 'typeit';
 import { Typography, Grid } from '@material-ui/core'
 
 class Type extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  // }
 
   componentDidMount() {
     new TypeIt(this.el).go();

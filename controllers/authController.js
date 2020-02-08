@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 const crypto = require('crypto');
 const sendgrid = require('@sendgrid/mail');
-
 const User = require('../models/User');
 
 exports.postRegister = async (req, res) => {
@@ -105,38 +104,6 @@ exports.getVerify = async (req, res) => {
 
 }
 
-// exports.getVerify = async (req, res, next) => {
-//   try {
-//     const verificationToken = req.params.verificationToken;
-//     const user = await User.findOne({
-//       verificationToken: verificationToken
-//     });
-//     if (!user) {
-//       //Add flash message or do something else
-//       throw Error('User not found');
-//     }
-//     user.isVerified = true;
-//     user.verificationToken = undefined;
-//     await user.save();
-//     req.session.user = user;
-
-//     if (req.session.isLoggedIn) {
-//       res.redirect('/problems');
-//     } else {
-//       //To change page titles everywhere
-//       res.render('index', {
-//         pageTitle: 'Signup Testing',
-//         activeCard: 'login',
-//         isLoggedIn: req.session.isLoggedIn
-//       });
-//     }
-//   }
-//   catch (e) {
-//     console.log(e.message);
-//     return res.status(500).send('Server error');
-//   }
-// }
-
 exports.getResend = async (req, res) => {
   try {
     const user = await User.findById(req.id).select('-password');
@@ -153,7 +120,6 @@ exports.getResend = async (req, res) => {
 exports.postResetMail = async (req, res) => {
   const errors = validationResult(req);
   const { resetEmail } = req.body;
-  console.log(resetEmail)
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
@@ -178,7 +144,6 @@ exports.postResetMail = async (req, res) => {
 exports.postResetPassword = async (req, res) => {
   const errors = validationResult(req);
   const { resetToken, password } = req.body;
-  console.log(resetToken, password);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
@@ -193,7 +158,7 @@ exports.postResetPassword = async (req, res) => {
     user.resetToken = undefined;
     await user.save();
     res.status(200).send('Your password has been reset.');
-  
+
   } catch (e) {
     console.log(e.message);
     return res.status(500).send('Server error');
@@ -202,20 +167,18 @@ exports.postResetPassword = async (req, res) => {
 
 
 const sendMail = async (user, type) => {
-  // Change localhost to hosted place before deploying
-
   const { email, name, verificationToken, resetToken } = user;
 
   const templateData = type === 'verify' ? {
     subject: 'Welcome to P₹ice Tracker!',
     text: `Hi ${name}, thanks for signing up! Please click the button below to verify your account.`,
     buttonText: `Click here to ${type} account`,
-    link: `http://localhost:3000/verify/${verificationToken}`
+    link: `http://trackprice.herokuapp.com/verify/${verificationToken}`
   } : {
       subject: 'P₹ice Tracker - Reset Password',
       text: `Hi ${name}, please click the button below to reset your account.`,
       buttonText: `Click here to ${type} account`,
-      link: `http://localhost:3000/reset/${resetToken}`
+      link: `http://trackprice.herokuapp.com/reset/${resetToken}`
     };
 
   const message = {

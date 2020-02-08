@@ -19,21 +19,3 @@ const Landing = (props) => {
 }
 
 export default Landing;
-
-// const Landing = () => {
-//   return (
-//     <React.Fragment>
-//       <BrowserRouter>
-//         <Switch>
-//           <PrivateRoute exact path='/products' component={Products} />
-//           <Navbar />
-//           <Grid container alignItems="center" justify="center" style={{ minHeight: '100vh', backgroundColor: '#EEEEEE' }} >
-//             <Type />
-//             <Route exact path='/register' component={Register} />
-//             <Route exact path='/login' component={Login} />
-//           </Grid>
-//         </Switch>
-//       </BrowserRouter>
-//     </React.Fragment>
-//   )
-// }

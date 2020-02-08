@@ -6,10 +6,6 @@ const auth = require('../middleware/auth');
 
 router.get('/products', auth, productsController.getProducts);
 
-// router.post('/products', [auth, [
-//   check('link', 'Product link is required').not().isEmpty().trim()
-// ]], productsController.postProducts);
-
 router.post('/products', [auth,
   check('link', 'Product link is required').not().isEmpty().trim(),
   check('targetPrice', 'Enter valid target price').optional().isNumeric()

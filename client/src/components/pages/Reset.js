@@ -67,9 +67,7 @@ const Reset = (props) => {
         headers: { 'Content-Type': 'application/json' }
       }
       await axios.post('/api/reset-password', { resetToken, password }, config);
-      // console.log('Reset');
       props.history.push('/login');
-      // setTimeout(() => props.history.push('/login'), 5000);
     }
   }
 
